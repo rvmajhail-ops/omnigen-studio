@@ -1,289 +1,139 @@
-# omnigen-studio
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OmniGen AI - Unlimited Access</title>
-    <style>
-        :root {
-            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
-            --panel-bg: rgba(30, 41, 59, 0.7);
-            --accent-color: #6366f1;
-            --accent-hover: #4f46e5;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-        }
+# OmniGen Studio
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
+A modern, elegant web interface for AI-powered text and image generation. Create stunning content instantly with unlimited access to cutting-edge AI models.
 
-        body {
-            background: var(--bg-gradient);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+## 🚀 Features
 
-        /* Header Navigation */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem 2rem;
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
+- **Text Generation**: Generate creative text, stories, and answers instantly
+- **Image Generation**: Create beautiful images from natural language descriptions
+- **Modern UI**: Sleek dark theme with smooth animations and responsive design
+- **Zero Setup**: Works out of the box with fallback simulations
+- **Real API Integration**: Connect to free Hugging Face models for production use
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            background: linear-gradient(to right, #818cf8, #c084fc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+## 🌐 Live Demo
 
-        .nav-tabs {
-            display: flex;
-            gap: 1rem;
-        }
+**Access the app here:** https://rvmajhail-ops.github.io/omnigen-studio/
 
-        .tab-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            padding: 0.5rem 1rem;
-            font-size: 1rem;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
+## 📋 Quick Start
 
-        .tab-btn.active, .tab-btn:hover {
-            background: var(--accent-color);
-            color: white;
-        }
+### 1. Basic Usage (Simulation Mode)
+The app works immediately without any setup! Click the "Generate" button and it will show demo responses. Perfect for testing the UI and functionality.
 
-        /* Main App Container */
-        main {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
-        }
+### 2. Live API Setup (Optional)
 
-        .workspace {
-            background: var(--panel-bg);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            width: 100%;
-            max-width: 900px;
-            height: 70vh;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-        }
+To enable real AI generation, you'll need a free Hugging Face API key:
 
-        .output-panel {
-            flex: 1;
-            padding: 2rem;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
+#### Step 1: Get Your API Key
+1. Visit https://huggingface.co/settings/tokens
+2. Create a new token (name it "OmniGen Studio")
+3. Copy your token
 
-        .input-panel {
-            padding: 1.5rem;
-            background: rgba(15, 23, 42, 0.4);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            gap: 1rem;
-        }
+#### Step 2: Add Your Key to the App
 
-        textarea {
-            flex: 1;
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            color: white;
-            padding: 1rem;
-            resize: none;
-            font-size: 1rem;
-            height: 54px;
-            transition: border 0.3s;
-        }
+**Option A: Local Modification**
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/rvmajhail-ops/omnigen-studio.git
+   cd omnigen-studio
+   ```
+2. Open `index.html` in your editor
+3. Find line 250 and replace `hf_YOUR_FREE_API_KEY_HERE` with your actual token:
+   ```javascript
+   headers: { Authorization: "Bearer hf_YOUR_FREE_API_KEY_HERE" }
+   ```
+4. Also replace it on line 264
+5. Save and commit:
+   ```bash
+   git add index.html
+   git commit -m "Add Hugging Face API key"
+   git push
+   ```
 
-        textarea:focus {
-            outline: none;
-            border-color: var(--accent-color);
-        }
+**Option B: Browser Console (Temporary)**
+1. Open the app in your browser
+2. Press `F12` to open Developer Tools
+3. Go to the Console tab
+4. Paste your key when prompted
 
-        .gen-btn {
-            background: var(--accent-color);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            padding: 0 1.5rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
+## 🛠️ Technology Stack
 
-        .gen-btn:hover {
-            background: var(--accent-hover);
-        }
+- **Frontend**: HTML5, CSS3, Vanilla JavaScript
+- **APIs**: Hugging Face Inference API
+- **Models**:
+  - Text: Mistral-7B-Instruct-v0.2
+  - Image: Stable Diffusion XL Base 1.0
 
-        /* Content Styles */
-        .ai-response {
-            background: rgba(255,255,255,0.05);
-            padding: 1rem;
-            border-radius: 12px;
-            line-height: 1.5;
-        }
+## 📝 Available Models
 
-        .image-result {
-            max-width: 100%;
-            max-height: 400px;
-            border-radius: 12px;
-            margin-top: 1rem;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-            align-self: center;
-        }
+### Text Generation
+- **Model**: `mistralai/Mistral-7B-Instruct-v0.2`
+- **Type**: Large Language Model
+- **Capabilities**: Story writing, Q&A, content creation, coding
 
-        .hidden { display: none !important; }
+### Image Generation
+- **Model**: `stabilityai/stable-diffusion-xl-base-1.0`
+- **Type**: Text-to-Image
+- **Capabilities**: Photo-realistic and artistic image generation
 
-        .loader {
-            border: 4px solid rgba(255,255,255,0.1);
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            border-left-color: var(--accent-color);
-            animation: spin 1s linear infinite;
-            align-self: center;
-            margin: 2rem 0;
-        }
+## 🔒 Security & Privacy
 
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+- **Client-Side Processing**: All requests processed in your browser
+- **No Data Storage**: We don't store any of your prompts or generated content
+- **API Keys**: Keep your Hugging Face token secure and never share it
+- **Open Source**: Code is transparent and auditable
 
-        /* Responsive Optimization for Phones */
-        @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                gap: 1rem;
-                padding: 1rem;
-            }
-            main { padding: 1rem; }
-            .workspace { height: 75vh; }
-            .input-panel { flex-direction: column; }
-            textarea { height: 80px; }
-            .gen-btn { padding: 1rem; }
-        }
-    </style>
-</head>
-<body>
+## 💡 Pro Tips
 
-    <header>
-        <div class="logo">OmniGen Studio</div>
-        <div class="nav-tabs">
-            <button class="tab-btn active" onclick="switchTab('text')">Text AI</button>
-            <button class="tab-btn" onclick="switchTab('image')">Image AI</button>
-        </div>
-    </header>
+1. **Batch Requests**: Generate multiple items in succession - the chat history persists
+2. **Detailed Prompts**: More specific prompts yield better results
+3. **Tab Switching**: Seamlessly switch between Text and Image generation
+4. **Responsive**: Works great on desktop, tablet, and mobile devices
 
-    <main>
-        <div class="workspace">
-            <div id="outputPanel" class="output-panel">
-                <div class="ai-response">Welcome! Type a prompt below to generate text or images instantly without limit.</div>
-            </div>
+## 📚 Additional Resources
 
-            <div id="loader" class="loader hidden"></div>
+- [Hugging Face Models](https://huggingface.co/models)
+- [Hugging Face API Documentation](https://huggingface.co/docs/api-inference/index)
+- [Mistral Model Card](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.2)
+- [Stable Diffusion XL](https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0)
 
-            <div class="input-panel">
-                <textarea id="promptInput" placeholder="Ask me anything..."></textarea>
-                <button class="gen-btn" onclick="handleGeneration()">Generate</button>
-            </div>
-        </div>
-    </main>
+## 🐛 Troubleshooting
 
-    <script>
-        let currentMode = 'text';
+### "AI Response generated successfully (simulated without Key)"
+- This is the fallback mode - you haven't added your API key yet
+- Solution: Add your Hugging Face API key following the instructions above
 
-        function switchTab(mode) {
-            currentMode = mode;
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            const input = document.getElementById('promptInput');
-            if(mode === 'text') {
-                input.placeholder = "Ask me anything or write a story...";
-            } else {
-                input.placeholder = "Describe the image you want to create...";
-            }
-        }
+### Rate Limiting
+- Free tier has limits on concurrent requests
+- Wait a few seconds between requests if you hit limits
+- Upgrade to Hugging Face Pro for higher limits
 
-        async function handleGeneration() {
-            const prompt = document.getElementById('promptInput').value.trim();
-            if (!prompt) return;
+### CORS Issues
+- Some models may have CORS restrictions
+- Try switching to a different model or upgrading your API plan
 
-            const outputPanel = document.getElementById('outputPanel');
-            const loader = document.getElementById('loader');
+## 📄 License
 
-            // Show loading animation
-            loader.classList.remove('hidden');
-            document.getElementById('promptInput').value = '';
+MIT License - Feel free to use this project for personal or commercial purposes.
 
-            try {
-                if (currentMode === 'text') {
-                    // Hook into a Free Text API (e.g., Hugging Face Serverless or your backend)
-                    // For demo/instant use, we show a client-side wrapper. Swap URL with your live endpoint.
-                    const response = await fetch("https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2", {
-                        headers: { Authorization: "Bearer hf_YOUR_FREE_API_KEY_HERE" }, // Put your free HuggingFace Key here
-                        method: "POST",
-                        body: JSON.stringify({ inputs: prompt }),
-                    });
-                    const data = await response.json();
-                    
-                    const textDiv = document.createElement('div');
-                    textDiv.className = 'ai-response';
-                    textDiv.innerText = data[0]?.generated_text || "AI Response generated successfully (simulated without Key).";
-                    outputPanel.appendChild(textDiv);
+## 🤝 Contributing
 
-                } else {
-                    // Hook into a Free Image API (e.g., Stable Diffusion via Hugging Face)
-                    const response = await fetch("https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0", {
-                        headers: { Authorization: "Bearer hf_YOUR_FREE_API_KEY_HERE" },
-                        method: "POST",
-                        body: JSON.stringify({ inputs: prompt }),
-                    });
-                    const blob = await response.blob();
-                    const imgUrl = URL.createObjectURL(blob);
+Found a bug? Have a feature idea? Contributions are welcome!
 
-                    const img = document.createElement('img');
-                    img.src = imgUrl;
-                    img.className = 'image-result';
-                    outputPanel.appendChild(img);
-                }
-            } catch (error) {
-                // Fallback simulation so it works right out of the box
-                const fallbackDiv = document.createElement('div');
-                fallbackDiv.className = 'ai-response';
-                fallbackDiv.innerHTML = `<strong>Prompt received:</strong> "${prompt}"<br><br><em>[To go completely live, paste your free Hugging Face API key into line 163 of the HTML code!]</em>`;
-                outputPanel.appendChild(fallbackDiv);
-            } finally {
-                loader.classList.add('hidden');
-                outputPanel.scrollTop = outputPanel.scrollHeight;
-            }
-        }
-    </script>
-</body>
-</html>
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## ⭐ Show Your Support
+
+If you find OmniGen Studio useful, please consider:
+- ⭐ Starring this repository
+- 🔄 Sharing it with others
+- 💬 Providing feedback and suggestions
+
+---
+
+**Built with ❤️ using modern web technologies**
+
+Questions? Open an issue or visit the [Hugging Face Community](https://huggingface.co/community) for support.
